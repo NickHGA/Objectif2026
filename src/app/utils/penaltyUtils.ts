@@ -11,12 +11,18 @@ export const calculatePenalties = (
   activities.forEach(activity => {
     const penaltyDays = activity.penaltyDays || 3;
     const penaltyIncrease = activity.penaltyIncrease || 10;
+    const activityCreatedDate = new Date(activity.createdAt);
 
     // Check the last penaltyDays days for missed activities
     for (let i = 1; i <= penaltyDays; i++) {
       const checkDate = new Date(currentDate);
       checkDate.setDate(checkDate.getDate() - i);
       const checkDateStr = checkDate.toISOString().split('T')[0];
+
+      // Don't apply penalty for days before activity was created
+      if (checkDate < activityCreatedDate) {
+        continue;
+      }
 
       // Check if activity was scheduled for that day
       if (!isActivityScheduledForDate(activity, checkDateStr)) {

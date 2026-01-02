@@ -45,3 +45,43 @@ export interface Stats {
   totalTimeSpent: number; // in minutes
   categoryBreakdown: Record<Category, number>;
 }
+
+export interface DailyNote {
+  id: string;
+  date: string; // YYYY-MM-DD
+  mood: 'great' | 'good' | 'okay' | 'bad';
+  note: string;
+  createdAt: string;
+}
+
+export interface Goal {
+  id: string;
+  type: 'weekly' | 'monthly';
+  targetRate: number; // Percentage (0-100)
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+}
+
+export type Theme = 'dark-blue' | 'dark-purple' | 'dark-green' | 'dark-default';
+
+export interface Badge {
+  id: string;
+  type: 'streak_7' | 'streak_30' | 'streak_100' | 'perfect_week' | 'perfect_month' | 'activities_100' | 'activities_500' | 'early_bird' | 'night_owl';
+  earnedAt: string;
+}
+
+export interface AppSettings {
+  theme: Theme;
+  notifications: boolean;
+  notificationTime?: string; // HH:mm format
+}
+
+export interface UserData {
+  activities: Activity[];
+  logs: DailyLog[];
+  notes: DailyNote[];
+  goals: Goal[];
+  badges: Badge[];
+  settings: AppSettings;
+}

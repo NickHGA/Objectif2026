@@ -285,9 +285,9 @@ export function ActivityManager({
             {activities.map(activity => (
               <div
                 key={activity.id}
-                className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
+                className="p-5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-4 h-4 rounded-full flex-shrink-0"
@@ -306,6 +306,45 @@ export function ActivityManager({
                   >
                     <Trash2 className="w-5 h-5" />
                   </button>
+                </div>
+
+                {/* Additional Info */}
+                <div className="space-y-2 pt-3 border-t border-white/5">
+                  {/* Week Days */}
+                  {activity.weekDays && activity.weekDays.length > 0 ? (
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <div className="flex gap-1">
+                        {activity.weekDays.map(day => (
+                          <span 
+                            key={day} 
+                            className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded"
+                          >
+                            {getWeekDayFullName(day)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <span className="text-xs text-gray-400">Tous les jours</span>
+                    </div>
+                  )}
+
+                  {/* Penalty Info */}
+                  <div className="flex items-center gap-4 text-xs">
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <span>⚠️ Pénalité:</span>
+                      <span className="text-red-400 font-semibold">
+                        +{activity.penaltyIncrease || 10} {activity.unit}
+                      </span>
+                      <span>pendant</span>
+                      <span className="text-red-400 font-semibold">
+                        {activity.penaltyDays || 3} jours
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

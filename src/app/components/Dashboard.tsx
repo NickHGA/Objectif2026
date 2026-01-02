@@ -1,19 +1,32 @@
-import { Activity, DailyLog, Penalty } from '../types';
+import { Activity, DailyLog, Penalty, DailyNote, Goal } from '../types';
 import { ActivityCard } from './ActivityCard';
 import { getTodayDate, formatDate } from '../utils/dateUtils';
-import { Calendar, TrendingUp, Plus } from 'lucide-react';
+import { Calendar, TrendingUp, Plus, BookOpen, Settings, Target, CalendarDays } from 'lucide-react';
 import { isActivityScheduledForDate, calculatePenalties } from '../utils/penaltyUtils';
+import { getActiveGoal, calculateGoalProgress } from '../utils/goalUtils';
 
 interface DashboardProps {
   activities: Activity[];
   logs: DailyLog[];
+  notes: DailyNote[];
+  goals: Goal[];
   onToggleActivity: (activityId: string, value?: number, comment?: string) => void;
-  onNavigate: (view: 'dashboard' | 'activities' | 'stats') => void;
+  onNavigate: (view: 'dashboard' | 'activities' | 'stats' | 'calendar' | 'settings') => void;
+  onOpenNoteModal: () => void;
 }
 
-export function Dashboard({ activities, logs, onToggleActivity, onNavigate }: DashboardProps) {
+export function Dashboard({ 
+  activities, 
+  logs, 
+  notes, 
+  goals, 
+  onToggleActivity, 
+  onNavigate,
+  onOpenNoteModal 
+}: DashboardProps) {
   const today = getTodayDate();
   const todayLogs = logs.filter(log => log.date === today);
+  const todayNote = notes.find(note => note.date === today);
   
   // Filter activities for today based on weekDays
   const todayActivities = activities.filter(activity => 
@@ -27,6 +40,10 @@ export function Dashboard({ activities, logs, onToggleActivity, onNavigate }: Da
   const totalCount = todayActivities.length;
   const completionRate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
+  // Active goal
+  const activeGoal = getActiveGoal(goals, today);
+  const goalProgress = activeGoal ? calculateGoalProgress(activeGoal, activities, logs) : null;
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -37,13 +54,57 @@ export function Dashboard({ activities, logs, onToggleActivity, onNavigate }: Da
               <h1 className="text-2xl font-bold">Objectif 2026</h1>
               <p className="text-sm text-gray-400">{formatDate(today)}</p>
             </div>
-            <button
-              onClick={() => onNavigate('stats')}
-              className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
-            >
-              <TrendingUp className="w-5 h-5" />
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => onNavigate('calendar')}
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <CalendarDays className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => onNavigate('stats')}
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <TrendingUp className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => onNavigate('settings')}
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
+
+          {/* Active Goal */}
+          {activeGoal && goalProgress && (
+            <div className="mb-4 p-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-violet-500/10 border border-blue-500/30">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Target className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm text-gray-300">
+                    Objectif {activeGoal.type === 'weekly' ? 'hebdomadaire' : 'mensuel'}
+                  </span>
+                </div>
+                <span className="text-sm font-semibold text-white">
+                  {goalProgress.rate}% / {activeGoal.targetRate}%
+                </span>
+              </div>
+              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div 
+                  className={`h-full transition-all duration-500 ${
+                    goalProgress.rate >= activeGoal.targetRate 
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500' 
+                      : 'bg-gradient-to-r from-blue-500 to-violet-500'
+                  }`}
+                  style={{ width: `${Math.min(goalProgress.rate, 100)}%` }}
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                {goalProgress.current} / {goalProgress.total} activités complétées
+              </p>
+            </div>
+          )}
 
           {/* Progress bar */}
           <div className="space-y-2">
@@ -107,13 +168,28 @@ export function Dashboard({ activities, logs, onToggleActivity, onNavigate }: Da
 
         {/* Add activity button */}
         {activities.length > 0 && (
-          <button
-            onClick={() => onNavigate('activities')}
-            className="w-full mt-6 py-4 border-2 border-dashed border-white/10 rounded-xl text-gray-400 hover:border-white/20 hover:text-white transition-all flex items-center justify-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Gérer les activités
-          </button>
+          <>
+            <button
+              onClick={() => onNavigate('activities')}
+              className="w-full mt-6 py-4 border-2 border-dashed border-white/10 rounded-xl text-gray-400 hover:border-white/20 hover:text-white transition-all flex items-center justify-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              Gérer les activités
+            </button>
+
+            {/* Daily note button */}
+            <button
+              onClick={onOpenNoteModal}
+              className={`w-full mt-3 py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
+                todayNote
+                  ? 'bg-green-500/10 border-2 border-green-500/30 text-green-400'
+                  : 'bg-blue-500/10 border-2 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
+              }`}
+            >
+              <BookOpen className="w-5 h-5" />
+              {todayNote ? 'Modifier ma note du jour' : 'Ajouter une note du jour'}
+            </button>
+          </>
         )}
       </div>
     </div>
