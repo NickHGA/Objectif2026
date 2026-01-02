@@ -27,7 +27,7 @@ export function DailyNoteModal({ existingNote, date, onSave, onClose }: DailyNot
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-gray-900 rounded-2xl border border-white/10 max-w-md w-full p-6">
+      <div className="bg-background rounded-2xl border border-white/10 max-w-md w-full p-6 transition-colors duration-500">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Note du jour</h2>
           <button
@@ -49,11 +49,10 @@ export function DailyNoteModal({ existingNote, date, onSave, onClose }: DailyNot
                   <button
                     key={option.value}
                     onClick={() => setMood(option.value)}
-                    className={`p-4 rounded-xl border-2 transition-all ${
-                      mood === option.value
-                        ? 'border-blue-500 bg-blue-500/10'
+                    className={`p-4 rounded-xl border-2 transition-all ${mood === option.value
+                        ? 'border-primary bg-primary/10'
                         : 'border-white/10 bg-white/5 hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     <Icon className={`w-8 h-8 mx-auto mb-2 ${option.color}`} />
                     <p className="text-xs text-gray-400">{option.label}</p>
@@ -71,7 +70,7 @@ export function DailyNoteModal({ existingNote, date, onSave, onClose }: DailyNot
               onChange={(e) => setNote(e.target.value)}
               placeholder="Qu'as-tu appris ? Quelles difficultés as-tu rencontrées ?"
               rows={5}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-none"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary resize-none"
             />
             <p className="text-xs text-gray-500 mt-2">
               {note.length}/500 caractères
@@ -88,7 +87,7 @@ export function DailyNoteModal({ existingNote, date, onSave, onClose }: DailyNot
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all"
             >
               Enregistrer
             </button>

@@ -8,6 +8,7 @@ import { CalendarView } from './components/CalendarView';
 import { DailyNoteModal } from './components/DailyNoteModal';
 import { SettingsModal } from './components/SettingsModal';
 import { GoalModal } from './components/GoalModal';
+import { DayDetailModal } from './components/DayDetailModal';
 import { BadgeNotification } from './components/BadgeNotification';
 import { Confetti } from './components/Confetti';
 import { getTodayDate } from './utils/dateUtils';
@@ -33,6 +34,8 @@ export default function App() {
   const [showNoteModal, setShowNoteModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
+  const [showDayDetailModal, setShowDayDetailModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [newBadge, setNewBadge] = useState<Badge | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -122,9 +125,9 @@ export default function App() {
     }
   };
 
-  const handleSaveNote = (mood: DailyNote['mood'], note: string) => {
-    const today = getTodayDate();
-    const existingNote = notes.find(n => n.date === today);
+  const handleSaveNote = (mood: DailyNote['mood'], note: string, customDate?: string) => {
+    const targetDate = customDate || getTodayDate();
+    const existingNote = notes.find(n => n.date === targetDate);
 
     if (existingNote) {
       setNotes(
@@ -137,7 +140,7 @@ export default function App() {
     } else {
       const newNote: DailyNote = {
         id: crypto.randomUUID(),
-        date: today,
+        date: targetDate,
         mood,
         note,
         createdAt: new Date().toISOString(),
@@ -166,8 +169,13 @@ export default function App() {
     }
   };
 
+  const handleSelectDate = (date: string) => {
+    setSelectedDate(date);
+    setShowDayDetailModal(true);
+  };
+
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-background min-h-screen text-foreground transition-colors duration-500">
       {currentView === 'dashboard' && (
         <Dashboard
           activities={activities}
@@ -234,6 +242,17 @@ export default function App() {
         />
       )}
 
+      {showDayDetailModal && selectedDate && (
+        <DayDetailModal
+          date={selectedDate}
+          activities={activities}
+          logs={logs}
+          notes={notes}
+          onClose={() => setShowDayDetailModal(false)}
+          onSaveNote={(date, mood, note) => handleSaveNote(mood, note, date)}
+        />
+      )}
+
       {/* Badge notification */}
       {newBadge && (
         <BadgeNotification
@@ -252,7 +271,7 @@ export default function App() {
       {currentView === 'dashboard' && !showSettingsModal && (
         <button
           onClick={() => setShowSettingsModal(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 shadow-lg hover:shadow-xl transition-all z-40 flex items-center justify-center group"
+          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg hover:shadow-xl transition-all z-40 flex items-center justify-center group"
           title="Paramètres"
         >
           <Settings className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-500" />

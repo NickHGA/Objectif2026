@@ -56,9 +56,9 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
   });
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-2xl mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <button
@@ -98,7 +98,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
         <div className="p-6 rounded-xl bg-white/5 border border-white/10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <Calendar className="w-6 h-6 text-blue-400" />
+              <Calendar className="w-6 h-6 text-primary" />
               <h3 className="font-semibold">Aujourd'hui</h3>
             </div>
             <span className="text-2xl font-bold text-white">{stats.completionRate}%</span>
@@ -117,7 +117,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
         {/* Weekly chart */}
         <div className="p-6 rounded-xl bg-white/5 border border-white/10">
           <div className="flex items-center gap-3 mb-6">
-            <TrendingUp className="w-6 h-6 text-violet-400" />
+            <TrendingUp className="w-6 h-6 text-secondary" />
             <h3 className="font-semibold">7 derniers jours</h3>
           </div>
 
@@ -140,7 +140,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
         {stats.totalTimeSpent > 0 && (
           <div className="p-6 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
-              <Clock className="w-6 h-6 text-green-400" />
+              <Clock className="w-6 h-6 text-accent" />
               <h3 className="font-semibold">Temps total investi</h3>
             </div>
             <p className="text-3xl font-bold text-white mb-2">
@@ -182,7 +182,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
         {activityStats.length > 0 && (
           <div className="p-6 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
-              <Target className="w-6 h-6 text-blue-400" />
+              <Target className="w-6 h-6 text-primary" />
               <h3 className="font-semibold">Détails par activité</h3>
             </div>
             <div className="space-y-4">
@@ -332,9 +332,9 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
 
         {/* Prediction Section */}
         {predictMonthlyCompletion(activities, logs) > 0 && (
-          <div className="p-6 rounded-xl bg-gradient-to-r from-violet-500/20 to-purple-500/10 border border-violet-500/30">
+          <div className="p-6 rounded-xl bg-gradient-to-r from-secondary/20 to-primary/10 border border-secondary/30">
             <div className="flex items-center gap-3 mb-4">
-              <TrendingUp className="w-6 h-6 text-violet-400" />
+              <TrendingUp className="w-6 h-6 text-secondary" />
               <h3 className="font-semibold">Prédiction du mois</h3>
             </div>
             <div className="text-center">

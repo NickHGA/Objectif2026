@@ -16,6 +16,12 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState(log?.comment || '');
 
+  const isCompleted = log?.completed || false;
+  const categoryColor = getCategoryColor(activity.category);
+  const penaltyValue = getTotalPenaltyValue(penalties, activity.id, currentDate);
+  const totalValue = activity.value + penaltyValue;
+  const hasPenalty = penaltyValue > 0;
+
   const handleToggle = () => {
     if (!isCompleted) {
       onToggle(activity.id, totalValue, comment || undefined);

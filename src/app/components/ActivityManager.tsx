@@ -11,11 +11,11 @@ interface ActivityManagerProps {
   onNavigate: (view: 'dashboard' | 'activities' | 'stats') => void;
 }
 
-export function ActivityManager({ 
-  activities, 
-  onAddActivity, 
-  onDeleteActivity, 
-  onNavigate 
+export function ActivityManager({
+  activities,
+  onAddActivity,
+  onDeleteActivity,
+  onNavigate
 }: ActivityManagerProps) {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,9 +73,9 @@ export function ActivityManager({
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-white transition-colors duration-500">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-2xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
@@ -87,7 +87,7 @@ export function ActivityManager({
             <h1 className="text-xl font-bold">Mes activités</h1>
             <button
               onClick={() => setShowForm(true)}
-              className="p-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors"
+              className="p-2 rounded-lg bg-primary hover:bg-primary/80 transition-colors"
             >
               <Plus className="w-6 h-6" />
             </button>
@@ -109,7 +109,7 @@ export function ActivityManager({
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Ex: Anglais, Pompes, Lecture..."
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                 autoFocus
               />
             </div>
@@ -121,11 +121,10 @@ export function ActivityManager({
                 <button
                   type="button"
                   onClick={() => handleTypeChange('time')}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.type === 'time'
-                      ? 'border-blue-500 bg-blue-500/10'
+                  className={`p-4 rounded-lg border-2 transition-all ${formData.type === 'time'
+                      ? 'border-primary bg-primary/10'
                       : 'border-white/10 bg-white/5'
-                  }`}
+                    }`}
                 >
                   <Clock className="w-6 h-6 mx-auto mb-2" />
                   <p className="text-sm font-semibold">Temps</p>
@@ -133,11 +132,10 @@ export function ActivityManager({
                 <button
                   type="button"
                   onClick={() => handleTypeChange('quantity')}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.type === 'quantity'
-                      ? 'border-blue-500 bg-blue-500/10'
+                  className={`p-4 rounded-lg border-2 transition-all ${formData.type === 'quantity'
+                      ? 'border-primary bg-primary/10'
                       : 'border-white/10 bg-white/5'
-                  }`}
+                    }`}
                 >
                   <Hash className="w-6 h-6 mx-auto mb-2" />
                   <p className="text-sm font-semibold">Quantité</p>
@@ -154,7 +152,7 @@ export function ActivityManager({
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: parseInt(e.target.value) || 0 })}
                   min="1"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-primary"
                 />
               </div>
               <div>
@@ -164,7 +162,7 @@ export function ActivityManager({
                   value={formData.unit}
                   onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
                   placeholder="min, fois..."
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -178,13 +176,12 @@ export function ActivityManager({
                     key={cat}
                     type="button"
                     onClick={() => setFormData({ ...formData, category: cat })}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      formData.category === cat
+                    className={`p-3 rounded-lg border-2 transition-all ${formData.category === cat
                         ? 'border-white/30 bg-white/10'
                         : 'border-white/10 bg-white/5'
-                    }`}
+                      }`}
                   >
-                    <div 
+                    <div
                       className="w-3 h-3 rounded-full mx-auto mb-1"
                       style={{ backgroundColor: getCategoryColor(cat) }}
                     />
@@ -203,11 +200,10 @@ export function ActivityManager({
                     key={day}
                     type="button"
                     onClick={() => toggleWeekDay(day)}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      formData.weekDays.includes(day)
-                        ? 'border-blue-500 bg-blue-500/10'
+                    className={`p-3 rounded-lg border-2 transition-all ${formData.weekDays.includes(day)
+                        ? 'border-primary bg-primary/10'
                         : 'border-white/10 bg-white/5'
-                    }`}
+                      }`}
                   >
                     <p className="text-xs font-semibold">{getWeekDayFullName(day)}</p>
                   </button>
@@ -233,7 +229,7 @@ export function ActivityManager({
                     onChange={(e) => setFormData({ ...formData, penaltyDays: parseInt(e.target.value) || 1 })}
                     min="1"
                     max="7"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-primary"
                   />
                 </div>
                 <div>
@@ -243,7 +239,7 @@ export function ActivityManager({
                     value={formData.penaltyIncrease}
                     onChange={(e) => setFormData({ ...formData, penaltyIncrease: parseInt(e.target.value) || 1 })}
                     min="1"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -260,7 +256,7 @@ export function ActivityManager({
               </button>
               <button
                 type="submit"
-                className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-violet-600 rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+                className="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-secondary rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-all"
               >
                 Créer
               </button>
@@ -274,7 +270,7 @@ export function ActivityManager({
             <p className="text-gray-500 mb-4">Aucune activité créée</p>
             <button
               onClick={() => setShowForm(true)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all inline-flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-lg hover:shadow-lg hover:shadow-primary/50 transition-all inline-flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Créer ma première activité
@@ -289,7 +285,7 @@ export function ActivityManager({
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div 
+                    <div
                       className="w-4 h-4 rounded-full flex-shrink-0"
                       style={{ backgroundColor: activity.color }}
                     />
@@ -316,9 +312,9 @@ export function ActivityManager({
                       <Calendar className="w-4 h-4 text-gray-400" />
                       <div className="flex gap-1">
                         {activity.weekDays.map(day => (
-                          <span 
-                            key={day} 
-                            className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded"
+                          <span
+                            key={day}
+                            className="text-xs bg-primary/10 text-primary px-2 py-1 rounded"
                           >
                             {getWeekDayFullName(day)}
                           </span>

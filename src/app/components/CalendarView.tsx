@@ -38,19 +38,19 @@ export function CalendarView({ activities, logs, onNavigate, onSelectDate }: Cal
 
   const getDayStatus = (date: Date | null) => {
     if (!date) return null;
-    
+
     const dateStr = date.toISOString().split('T')[0];
-    const scheduledActivities = activities.filter(a => 
+    const scheduledActivities = activities.filter(a =>
       isActivityScheduledForDate(a, dateStr) &&
       new Date(a.createdAt) <= date
     );
-    
+
     if (scheduledActivities.length === 0) return 'none';
-    
+
     const dayLogs = logs.filter(l => l.date === dateStr);
     const completed = dayLogs.filter(l => l.completed).length;
     const total = scheduledActivities.length;
-    
+
     if (completed === 0) return 'missed';
     if (completed === total) return 'perfect';
     return 'partial';
@@ -69,9 +69,9 @@ export function CalendarView({ activities, logs, onNavigate, onSelectDate }: Cal
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-2xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
@@ -154,9 +154,8 @@ export function CalendarView({ activities, logs, onNavigate, onSelectDate }: Cal
                   key={index}
                   onClick={() => onSelectDate(dateStr)}
                   disabled={isFuture}
-                  className={`aspect-square rounded-lg border-2 transition-all hover:scale-105 ${bgColor} ${
-                    isToday ? 'ring-2 ring-blue-500' : ''
-                  } ${isFuture ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
+                  className={`aspect-square rounded-lg border-2 transition-all hover:scale-105 ${bgColor} ${isToday ? 'ring-2 ring-blue-500' : ''
+                    } ${isFuture ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
                   <div className="flex flex-col items-center justify-center h-full">
                     <span className={`text-sm ${isToday ? 'font-bold text-blue-400' : 'text-white'}`}>

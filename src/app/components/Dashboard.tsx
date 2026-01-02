@@ -46,9 +46,9 @@ export function Dashboard({
   const goalProgress = activeGoal ? calculateGoalProgress(activeGoal, activities, logs) : null;
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-gradient-to-b from-black to-transparent backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-2xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -95,8 +95,8 @@ export function Dashboard({
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
                   className={`h-full transition-all duration-500 bg-gradient-to-r ${goalProgress.rate >= activeGoal.targetRate
-                      ? 'from-accent to-emerald-500'
-                      : 'from-primary to-secondary'
+                    ? 'from-accent to-emerald-500'
+                    : 'from-primary to-secondary'
                     }`}
                   style={{ width: `${Math.min(goalProgress.rate, 100)}%` }}
                 />
@@ -182,8 +182,8 @@ export function Dashboard({
             <button
               onClick={onOpenNoteModal}
               className={`w-full mt-3 py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${todayNote
-                  ? 'bg-green-500/10 border-2 border-green-500/30 text-green-400'
-                  : 'bg-blue-500/10 border-2 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
+                ? 'bg-green-500/10 border-2 border-green-500/30 text-green-400'
+                : 'bg-blue-500/10 border-2 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
                 }`}
             >
               <BookOpen className="w-5 h-5" />

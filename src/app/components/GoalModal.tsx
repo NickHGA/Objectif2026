@@ -18,7 +18,7 @@ export function GoalModal({ onSave, onClose }: GoalModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-gray-900 rounded-2xl border border-white/10 max-w-md w-full p-6">
+      <div className="bg-background rounded-2xl border border-white/10 max-w-md w-full p-6 transition-colors duration-500">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Nouvel objectif</h2>
           <button
@@ -36,26 +36,24 @@ export function GoalModal({ onSave, onClose }: GoalModalProps) {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setGoalType('weekly')}
-                className={`p-4 rounded-xl border-2 transition-all ${
-                  goalType === 'weekly'
-                    ? 'border-blue-500 bg-blue-500/10'
+                className={`p-4 rounded-xl border-2 transition-all ${goalType === 'weekly'
+                    ? 'border-primary bg-primary/10'
                     : 'border-white/10 bg-white/5 hover:bg-white/10'
-                }`}
+                  }`}
               >
-                <Target className="w-6 h-6 mx-auto mb-2 text-blue-400" />
+                <Target className="w-6 h-6 mx-auto mb-2 text-primary" />
                 <p className="font-semibold text-white">Hebdomadaire</p>
                 <p className="text-xs text-gray-400 mt-1">Cette semaine</p>
               </button>
 
               <button
                 onClick={() => setGoalType('monthly')}
-                className={`p-4 rounded-xl border-2 transition-all ${
-                  goalType === 'monthly'
-                    ? 'border-purple-500 bg-purple-500/10'
+                className={`p-4 rounded-xl border-2 transition-all ${goalType === 'monthly'
+                    ? 'border-secondary bg-secondary/10'
                     : 'border-white/10 bg-white/5 hover:bg-white/10'
-                }`}
+                  }`}
               >
-                <TrendingUp className="w-6 h-6 mx-auto mb-2 text-purple-400" />
+                <TrendingUp className="w-6 h-6 mx-auto mb-2 text-secondary" />
                 <p className="font-semibold text-white">Mensuel</p>
                 <p className="text-xs text-gray-400 mt-1">Ce mois-ci</p>
               </button>
@@ -83,7 +81,7 @@ export function GoalModal({ onSave, onClose }: GoalModalProps) {
                 <span>100%</span>
               </div>
             </div>
-            <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-blue-500/20 to-violet-500/20 border border-blue-500/30 text-center">
+            <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/30 text-center">
               <p className="text-4xl font-bold text-white mb-1">{targetRate}%</p>
               <p className="text-sm text-gray-300">
                 {goalType === 'weekly' ? 'cette semaine' : 'ce mois-ci'}
@@ -92,8 +90,8 @@ export function GoalModal({ onSave, onClose }: GoalModalProps) {
           </div>
 
           {/* Info */}
-          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
-            <p className="text-xs text-blue-300">
+          <div className="p-4 rounded-xl bg-primary/10 border border-primary/30">
+            <p className="text-xs text-primary/80">
               💡 Tu seras notifié de ta progression et tu pourras voir si tu es en bonne voie pour atteindre ton objectif !
             </p>
           </div>
@@ -108,7 +106,7 @@ export function GoalModal({ onSave, onClose }: GoalModalProps) {
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all"
             >
               Créer l'objectif
             </button>

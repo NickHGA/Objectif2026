@@ -41,11 +41,12 @@ export const applyTheme = (theme: Theme) => {
   root.style.setProperty('--color-accent', themeColors.accent);
   root.style.setProperty('--color-background', themeColors.background);
 
-  // Sync with standard Tailwind variables if needed
+  // Sync with standard Tailwind variables
   root.style.setProperty('--primary', themeColors.primary);
   root.style.setProperty('--secondary', themeColors.secondary);
   root.style.setProperty('--accent', themeColors.accent);
   root.style.setProperty('--background', themeColors.background);
+  root.style.setProperty('--foreground', '#ffffff');
 };
 
 export const getThemeColor = (type: 'primary' | 'secondary' | 'accent' | 'background'): string => {
@@ -53,14 +54,5 @@ export const getThemeColor = (type: 'primary' | 'secondary' | 'accent' | 'backgr
 };
 
 export const getThemeGradient = (theme: Theme): string => {
-  switch (theme) {
-    case 'dark-blue':
-      return 'from-sky-500 to-cyan-500';
-    case 'dark-purple':
-      return 'from-purple-500 to-fuchsia-500';
-    case 'dark-green':
-      return 'from-green-500 to-emerald-500';
-    default:
-      return 'from-blue-500 to-violet-500';
-  }
+  return 'from-primary to-secondary';
 };

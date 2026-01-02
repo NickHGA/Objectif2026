@@ -28,7 +28,7 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-gray-900 rounded-2xl border border-white/10 max-w-md w-full p-6">
+      <div className="bg-background rounded-2xl border border-white/10 max-w-md w-full p-6 transition-colors duration-500">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Paramètres</h2>
           <button
@@ -52,8 +52,8 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
                   key={key}
                   onClick={() => setLocalSettings({ ...localSettings, theme: key })}
                   className={`w-full p-4 rounded-xl border-2 transition-all ${localSettings.theme === key
-                      ? 'border-primary bg-primary/10'
-                      : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    ? 'border-primary bg-primary/10'
+                    : 'border-white/10 bg-white/5 hover:bg-white/10'
                     }`}
                 >
                   <div className="flex items-center justify-between">
