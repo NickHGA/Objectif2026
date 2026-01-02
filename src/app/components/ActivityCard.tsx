@@ -16,14 +16,6 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState(log?.comment || '');
 
-  const isCompleted = log?.completed || false;
-  const categoryColor = getCategoryColor(activity.category);
-  
-  // Calculate penalty
-  const penaltyValue = getTotalPenaltyValue(penalties, activity.id, currentDate);
-  const totalValue = activity.value + penaltyValue;
-  const hasPenalty = penaltyValue > 0;
-
   const handleToggle = () => {
     if (!isCompleted) {
       onToggle(activity.id, totalValue, comment || undefined);
@@ -31,29 +23,34 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
     }
   };
 
+  const activeBorderColor = isCompleted
+    ? 'border-green-500/50'
+    : hasPenalty
+      ? 'border-red-500/30 hover:border-red-500/50'
+      : 'border-white/10 hover:border-white/20';
+
+  const activeBgColor = isCompleted
+    ? 'bg-white/5'
+    : hasPenalty
+      ? 'bg-red-500/5'
+      : 'bg-white/[0.02]';
+
   return (
-    <div 
-      className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-        isCompleted 
-          ? 'bg-white/5 border-green-500/50' 
-          : hasPenalty
-          ? 'bg-red-500/5 border-red-500/30 hover:border-red-500/50'
-          : 'bg-white/[0.02] border-white/10 hover:border-white/20'
-      }`}
+    <div
+      className={`p-4 rounded-xl border-2 transition-all duration-300 ${activeBgColor} ${activeBorderColor}`}
     >
       <div className="flex items-center gap-3">
         {/* Checkbox */}
         <button
           onClick={handleToggle}
-          className={`flex-shrink-0 transition-all ${
-            isCompleted ? 'cursor-default' : 'cursor-pointer hover:scale-110'
-          }`}
+          className={`flex-shrink-0 transition-all ${isCompleted ? 'cursor-default' : 'cursor-pointer hover:scale-110'
+            }`}
           disabled={isCompleted}
         >
           {isCompleted ? (
             <CheckCircle2 className="w-7 h-7 text-green-500" />
           ) : (
-            <Circle className="w-7 h-7 text-gray-500 hover:text-white" />
+            <Circle className="w-7 h-7 text-gray-500 hover:text-primary" />
           )}
         </button>
 
@@ -63,8 +60,8 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
             <h3 className={`font-semibold ${isCompleted ? 'text-gray-400 line-through' : 'text-white'}`}>
               {activity.name}
             </h3>
-            <div 
-              className="w-2 h-2 rounded-full" 
+            <div
+              className="w-2 h-2 rounded-full"
               style={{ backgroundColor: categoryColor }}
             />
             {/* Week days indicator */}
@@ -78,7 +75,7 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center gap-3 text-sm text-gray-400">
             <div className="flex items-center gap-1">
               {activity.type === 'time' ? (
@@ -95,16 +92,16 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
                 )}
               </span>
             </div>
-            
+
             {hasPenalty && !isCompleted && (
               <div className="flex items-center gap-1 text-red-400">
                 <AlertTriangle className="w-4 h-4" />
                 <span className="text-xs font-semibold">Pénalité active</span>
               </div>
             )}
-            
+
             {log?.comment && (
-              <div className="flex items-center gap-1 text-blue-400">
+              <div className="flex items-center gap-1 text-primary">
                 <MessageSquare className="w-4 h-4" />
                 <span className="text-xs italic">{log.comment}</span>
               </div>
@@ -118,7 +115,7 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
             onClick={() => setShowComment(!showComment)}
             className="p-2 rounded-lg hover:bg-white/5 transition-colors"
           >
-            <MessageSquare className={`w-5 h-5 ${showComment ? 'text-blue-400' : 'text-gray-500'}`} />
+            <MessageSquare className={`w-5 h-5 ${showComment ? 'text-primary' : 'text-gray-500'}`} />
           </button>
         )}
       </div>
@@ -131,7 +128,7 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Ajouter un commentaire..."
-            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500"
+            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary"
           />
         </div>
       )}

@@ -34,11 +34,22 @@ export const THEMES = {
 export const applyTheme = (theme: Theme) => {
   const themeColors = THEMES[theme];
   const root = document.documentElement;
-  
+
+  // Custom variables for components
   root.style.setProperty('--color-primary', themeColors.primary);
   root.style.setProperty('--color-secondary', themeColors.secondary);
   root.style.setProperty('--color-accent', themeColors.accent);
   root.style.setProperty('--color-background', themeColors.background);
+
+  // Sync with standard Tailwind variables if needed
+  root.style.setProperty('--primary', themeColors.primary);
+  root.style.setProperty('--secondary', themeColors.secondary);
+  root.style.setProperty('--accent', themeColors.accent);
+  root.style.setProperty('--background', themeColors.background);
+};
+
+export const getThemeColor = (type: 'primary' | 'secondary' | 'accent' | 'background'): string => {
+  return `var(--color-${type})`;
 };
 
 export const getThemeGradient = (theme: Theme): string => {

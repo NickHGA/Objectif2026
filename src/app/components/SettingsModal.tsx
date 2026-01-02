@@ -51,11 +51,10 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
                 <button
                   key={key}
                   onClick={() => setLocalSettings({ ...localSettings, theme: key })}
-                  className={`w-full p-4 rounded-xl border-2 transition-all ${
-                    localSettings.theme === key
-                      ? 'border-blue-500 bg-blue-500/10'
+                  className={`w-full p-4 rounded-xl border-2 transition-all ${localSettings.theme === key
+                      ? 'border-primary bg-primary/10'
                       : 'border-white/10 bg-white/5 hover:bg-white/10'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -67,7 +66,7 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
                       <span className="text-white font-semibold">{theme.name}</span>
                     </div>
                     {localSettings.theme === key && (
-                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                      <div className="w-2 h-2 rounded-full bg-primary" />
                     )}
                   </div>
                 </button>
@@ -80,7 +79,7 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
               <div className="flex items-center gap-3">
                 {localSettings.notifications ? (
-                  <Bell className="w-5 h-5 text-blue-400" />
+                  <Bell className="w-5 h-5 text-primary" />
                 ) : (
                   <BellOff className="w-5 h-5 text-gray-400" />
                 )}
@@ -97,14 +96,12 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
                     setLocalSettings({ ...localSettings, notifications: false });
                   }
                 }}
-                className={`relative w-12 h-6 rounded-full transition-colors ${
-                  localSettings.notifications ? 'bg-blue-500' : 'bg-gray-600'
-                }`}
+                className={`relative w-12 h-6 rounded-full transition-colors ${localSettings.notifications ? 'bg-primary' : 'bg-gray-600'
+                  }`}
               >
                 <div
-                  className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
-                    localSettings.notifications ? 'translate-x-7' : 'translate-x-1'
-                  }`}
+                  className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${localSettings.notifications ? 'translate-x-7' : 'translate-x-1'
+                    }`}
                 />
               </button>
             </div>
@@ -118,7 +115,7 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
                   onChange={(e) =>
                     setLocalSettings({ ...localSettings, notificationTime: e.target.value })
                   }
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-primary"
                 />
               </div>
             )}
@@ -134,7 +131,7 @@ export function SettingsModal({ settings, onSave, onClose }: SettingsModalProps)
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              className="flex-1 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all"
             >
               Enregistrer
             </button>

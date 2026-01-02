@@ -21,14 +21,14 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
   const stats = calculateStats(activities, logs);
   const today = getTodayDate();
   const penalties = calculatePenalties(activities, logs, today);
-  
+
   // Activity-specific stats
   const activityStats = activities.map(activity => {
     const activityLogs = logs.filter(log => log.activityId === activity.id && log.completed);
     const totalScheduled = logs.filter(log => log.activityId === activity.id).length;
     const completionRate = totalScheduled > 0 ? Math.round((activityLogs.length / totalScheduled) * 100) : 0;
     const activePenalties = getActivePenalties(penalties, activity.id, today);
-    
+
     return {
       activity,
       completedCount: activityLogs.length,
@@ -39,7 +39,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
   });
 
   const last7Days = getDateRange(selectedPeriod);
-  
+
   // Calculate completion for selected period
   const periodData = last7Days.map(date => {
     const scheduledActivities = activities.filter(a => isActivityScheduledForDate(a, date));
@@ -104,8 +104,8 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
             <span className="text-2xl font-bold text-white">{stats.completionRate}%</span>
           </div>
           <div className="h-3 bg-white/5 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500"
+            <div
+              className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
               style={{ width: `${stats.completionRate}%` }}
             />
           </div>
@@ -120,13 +120,13 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
             <TrendingUp className="w-6 h-6 text-violet-400" />
             <h3 className="font-semibold">7 derniers jours</h3>
           </div>
-          
+
           <div className="flex items-end justify-between gap-2 h-32">
             {periodData.map((day, index) => (
               <div key={index} className="flex-1 flex flex-col items-center gap-2">
                 <div className="w-full flex flex-col justify-end h-24">
-                  <div 
-                    className="w-full bg-gradient-to-t from-blue-500 to-violet-500 rounded-t-lg transition-all duration-500"
+                  <div
+                    className="w-full bg-gradient-to-t from-primary to-secondary rounded-t-lg transition-all duration-500"
                     style={{ height: `${day.rate}%` }}
                   />
                 </div>
@@ -162,7 +162,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
                 .sort((a, b) => b[1] - a[1])
                 .map(([category, count]) => (
                   <div key={category} className="flex items-center gap-3">
-                    <div 
+                    <div
                       className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: getCategoryColor(category) }}
                     />
@@ -190,7 +190,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
                 <div key={activity.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div 
+                      <div
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: activity.color }}
                       />
@@ -206,15 +206,15 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
                       <p className="text-xs text-gray-400">{completedCount} complétées</p>
                     </div>
                   </div>
-                  
+
                   {/* Progress bar */}
                   <div className="h-2 bg-white/5 rounded-full overflow-hidden mb-2">
-                    <div 
-                      className="h-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500"
+                    <div
+                      className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
                       style={{ width: `${completionRate}%` }}
                     />
                   </div>
-                  
+
                   {/* Penalty indicator */}
                   {hasPenalty && (
                     <div className="flex items-center gap-2 mt-2 text-red-400">
@@ -224,7 +224,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
                       </span>
                     </div>
                   )}
-                  
+
                   {/* Week schedule */}
                   {activity.weekDays && activity.weekDays.length > 0 && (
                     <div className="flex items-center gap-2 mt-2">
@@ -251,16 +251,16 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
               {penalties.map((penalty, index) => {
                 const activity = activities.find(a => a.id === penalty.activityId);
                 if (!activity) return null;
-                
+
                 const daysRemaining = Math.ceil(
                   (new Date(penalty.endDate).getTime() - new Date(today).getTime()) / (1000 * 60 * 60 * 24)
                 );
-                
+
                 return (
                   <div key={index} className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <div 
+                        <div
                           className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: activity.color }}
                         />
@@ -317,7 +317,7 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
               {badges.map(badge => {
                 const definition = getBadgeDefinition(badge.type);
                 if (!definition) return null;
-                
+
                 return (
                   <div key={badge.id} className={`p-4 rounded-xl bg-gradient-to-br ${definition.color} border border-white/20 text-center`}>
                     <div className="text-3xl mb-2">{definition.icon}</div>

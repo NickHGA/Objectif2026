@@ -1,9 +1,10 @@
 import { Activity, DailyLog, Penalty, DailyNote, Goal } from '../types';
 import { ActivityCard } from './ActivityCard';
 import { getTodayDate, formatDate } from '../utils/dateUtils';
-import { Calendar, TrendingUp, Plus, BookOpen, Settings, Target, CalendarDays } from 'lucide-react';
+import { Calendar, History, Plus, BookOpen, Settings, Target, TrendingUp } from 'lucide-react';
 import { isActivityScheduledForDate, calculatePenalties } from '../utils/penaltyUtils';
 import { getActiveGoal, calculateGoalProgress } from '../utils/goalUtils';
+import { getThemeGradient } from '../utils/themeUtils';
 
 interface DashboardProps {
   activities: Activity[];
@@ -15,27 +16,27 @@ interface DashboardProps {
   onOpenNoteModal: () => void;
 }
 
-export function Dashboard({ 
-  activities, 
-  logs, 
-  notes, 
-  goals, 
-  onToggleActivity, 
+export function Dashboard({
+  activities,
+  logs,
+  notes,
+  goals,
+  onToggleActivity,
   onNavigate,
-  onOpenNoteModal 
+  onOpenNoteModal
 }: DashboardProps) {
   const today = getTodayDate();
   const todayLogs = logs.filter(log => log.date === today);
   const todayNote = notes.find(note => note.date === today);
-  
+
   // Filter activities for today based on weekDays
-  const todayActivities = activities.filter(activity => 
+  const todayActivities = activities.filter(activity =>
     isActivityScheduledForDate(activity, today)
   );
-  
+
   // Calculate penalties
   const penalties = calculatePenalties(activities, logs, today);
-  
+
   const completedCount = todayLogs.filter(log => log.completed).length;
   const totalCount = todayActivities.length;
   const completionRate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
@@ -57,9 +58,10 @@ export function Dashboard({
             <div className="flex gap-2">
               <button
                 onClick={() => onNavigate('calendar')}
-                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
+                title="Historique (Calendrier)"
               >
-                <CalendarDays className="w-5 h-5" />
+                <History className="w-5 h-5 group-hover:text-primary transition-colors" />
               </button>
               <button
                 onClick={() => onNavigate('stats')}
@@ -91,12 +93,11 @@ export function Dashboard({
                 </span>
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full transition-all duration-500 ${
-                    goalProgress.rate >= activeGoal.targetRate 
-                      ? 'bg-gradient-to-r from-green-500 to-emerald-500' 
-                      : 'bg-gradient-to-r from-blue-500 to-violet-500'
-                  }`}
+                <div
+                  className={`h-full transition-all duration-500 bg-gradient-to-r ${goalProgress.rate >= activeGoal.targetRate
+                      ? 'from-accent to-emerald-500'
+                      : 'from-primary to-secondary'
+                    }`}
                   style={{ width: `${Math.min(goalProgress.rate, 100)}%` }}
                 />
               </div>
@@ -113,8 +114,8 @@ export function Dashboard({
               <span className="font-semibold text-white">{completedCount}/{totalCount}</span>
             </div>
             <div className="h-3 bg-white/5 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-500 rounded-full"
+              <div
+                className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500 rounded-full"
                 style={{ width: `${completionRate}%` }}
               />
             </div>
@@ -134,8 +135,8 @@ export function Dashboard({
               {activities.length === 0 ? 'Aucune activité' : 'Aucune activité prévue aujourd\'hui'}
             </h3>
             <p className="text-gray-500 mb-6">
-              {activities.length === 0 
-                ? 'Commence par créer ta première activité' 
+              {activities.length === 0
+                ? 'Commence par créer ta première activité'
                 : 'Profite de ce jour de repos !'}
             </p>
             {activities.length === 0 && (
@@ -180,11 +181,10 @@ export function Dashboard({
             {/* Daily note button */}
             <button
               onClick={onOpenNoteModal}
-              className={`w-full mt-3 py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${
-                todayNote
+              className={`w-full mt-3 py-4 rounded-xl transition-all flex items-center justify-center gap-2 ${todayNote
                   ? 'bg-green-500/10 border-2 border-green-500/30 text-green-400'
                   : 'bg-blue-500/10 border-2 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
-              }`}
+                }`}
             >
               <BookOpen className="w-5 h-5" />
               {todayNote ? 'Modifier ma note du jour' : 'Ajouter une note du jour'}
