@@ -1,32 +1,46 @@
 import { Theme } from '../types';
 
 export const THEMES = {
+  'light-default': {
+    name: 'Sable Doux',
+    primary: '#b5835a',
+    secondary: '#7a918d',
+    accent: '#c97c5d',
+    background: '#fdfaf7',
+  },
   'dark-default': {
-    name: 'Noir classique',
-    primary: '#3b82f6', // blue-500
-    secondary: '#8b5cf6', // violet-500
-    accent: '#10b981', // green-500
-    background: '#000000',
+    name: 'Pierre Noire',
+    primary: '#d69e6d',
+    secondary: '#8da3a0',
+    accent: '#d68d71',
+    background: '#1c1917',
+  },
+  'mixed-glass': {
+    name: 'Verre Glacé',
+    primary: '#b5835a',
+    secondary: '#7a918d',
+    accent: '#c97c5d',
+    background: 'rgba(253, 250, 247, 0.6)',
   },
   'dark-blue': {
-    name: 'Océan nocturne',
-    primary: '#0ea5e9', // sky-500
-    secondary: '#06b6d4', // cyan-500
-    accent: '#14b8a6', // teal-500
+    name: 'Océan de Nuit',
+    primary: '#0ea5e9',
+    secondary: '#06b6d4',
+    accent: '#14b8a6',
     background: '#0a0e1a',
   },
   'dark-purple': {
-    name: 'Galaxie violette',
-    primary: '#a855f7', // purple-500
-    secondary: '#d946ef', // fuchsia-500
-    accent: '#ec4899', // pink-500
+    name: 'Nébuleuse',
+    primary: '#a855f7',
+    secondary: '#d946ef',
+    accent: '#ec4899',
     background: '#0f0a1a',
   },
   'dark-green': {
-    name: 'Forêt mystique',
-    primary: '#22c55e', // green-500
-    secondary: '#10b981', // emerald-500
-    accent: '#84cc16', // lime-500
+    name: 'Forêt Calme',
+    primary: '#22c55e',
+    secondary: '#10b981',
+    accent: '#84cc16',
     background: '#0a1a0a',
   },
 };
@@ -34,19 +48,19 @@ export const THEMES = {
 export const applyTheme = (theme: Theme) => {
   const themeColors = THEMES[theme];
   const root = document.documentElement;
+  const isDark = theme.startsWith('dark');
+  const isMixed = theme === 'mixed-glass';
 
-  // Custom variables for components
-  root.style.setProperty('--color-primary', themeColors.primary);
-  root.style.setProperty('--color-secondary', themeColors.secondary);
-  root.style.setProperty('--color-accent', themeColors.accent);
-  root.style.setProperty('--color-background', themeColors.background);
+  // Toggle classes
+  root.classList.toggle('dark', isDark);
+  root.classList.toggle('mixed-glass', isMixed);
 
-  // Sync with standard Tailwind variables
+  // Set CSS variables
+  root.style.setProperty('--background', themeColors.background);
   root.style.setProperty('--primary', themeColors.primary);
   root.style.setProperty('--secondary', themeColors.secondary);
   root.style.setProperty('--accent', themeColors.accent);
-  root.style.setProperty('--background', themeColors.background);
-  root.style.setProperty('--foreground', '#ffffff');
+  root.style.setProperty('--foreground', isDark ? '#f5f5f4' : '#4a443f');
 };
 
 export const getThemeColor = (type: 'primary' | 'secondary' | 'accent' | 'background'): string => {

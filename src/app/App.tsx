@@ -61,8 +61,8 @@ export default function App() {
         const [hours, minutes] = settings.notificationTime!.split(':').map(Number);
         if (now.getHours() === hours && now.getMinutes() === minutes) {
           if (Notification.permission === 'granted') {
-            new Notification('Objectif 2026', {
-              body: 'N\'oublie pas de compléter tes activités aujourd\'hui ! 💪',
+            new Notification('AURA', {
+              body: 'Taf fort pour booster ton aura ! N\'oublie pas tes activités. 💪',
               icon: '/icon.png',
             });
           }
@@ -185,6 +185,7 @@ export default function App() {
           onToggleActivity={handleToggleActivity}
           onNavigate={handleNavigate}
           onOpenNoteModal={() => setShowNoteModal(true)}
+          onOpenSettings={() => setShowSettingsModal(true)}
         />
       )}
 
@@ -267,16 +268,6 @@ export default function App() {
         onComplete={() => setShowConfetti(false)}
       />
 
-      {/* Settings button overlay */}
-      {currentView === 'dashboard' && !showSettingsModal && (
-        <button
-          onClick={() => setShowSettingsModal(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg hover:shadow-xl transition-all z-40 flex items-center justify-center group"
-          title="Paramètres"
-        >
-          <Settings className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-500" />
-        </button>
-      )}
     </div>
   );
 }

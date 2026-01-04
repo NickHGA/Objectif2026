@@ -63,7 +63,7 @@ export interface Goal {
   createdAt: string;
 }
 
-export type Theme = 'dark-blue' | 'dark-purple' | 'dark-green' | 'dark-default';
+export type Theme = 'dark-default' | 'dark-blue' | 'dark-purple' | 'dark-green' | 'light-default' | 'mixed-glass';
 
 export interface Badge {
   id: string;
