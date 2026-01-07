@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Activity, ActivityType, Category, WeekDay } from '../types';
 import { ArrowLeft, Plus, Trash2, Edit2, Clock, Hash, Calendar } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getCategoryColor, getCategoryLabel } from '../utils/statsUtils';
 import { getWeekDayFullName } from '../utils/penaltyUtils';
 
@@ -51,6 +51,7 @@ export function ActivityManager({
       penaltyIncrease: 10,
     });
     setShowForm(false);
+    onNavigate('dashboard');
   };
 
   const handleTypeChange = (type: ActivityType) => {

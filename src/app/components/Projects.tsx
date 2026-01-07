@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ExternalLink, Github, Database, Globe, Gamepad2, LayoutDashboard } from 'lucide-react';
 
@@ -54,7 +54,7 @@ export function Projects() {
     <section id="projects" className="relative py-32 bg-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f08_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section header */}
         <motion.div
@@ -85,7 +85,7 @@ export function Projects() {
               <div className="relative p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 overflow-hidden">
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-                
+
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Icon & Category */}

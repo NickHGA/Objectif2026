@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { GraduationCap, Target, Zap } from 'lucide-react';
 
@@ -29,7 +29,7 @@ export function About() {
     <section id="about" className="relative py-32 bg-gradient-to-b from-black to-gray-950 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f08_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section header */}
         <motion.div
@@ -59,17 +59,17 @@ export function About() {
             </h3>
             <div className="space-y-4 text-gray-300">
               <p>
-                Étudiant en Intelligence Artificielle à l'Institut de Recherche et de Formation en Informatique (IFRI), 
+                Étudiant en Intelligence Artificielle à l'Institut de Recherche et de Formation en Informatique (IFRI),
                 je ne me contente pas d'apprendre — je construis.
               </p>
               <p>
-                Chaque projet que je développe est une opportunité d'explorer comment l'IA et l'automatisation 
-                peuvent résoudre des problèmes réels. De la gestion de présence intelligente aux dashboards 
+                Chaque projet que je développe est une opportunité d'explorer comment l'IA et l'automatisation
+                peuvent résoudre des problèmes réels. De la gestion de présence intelligente aux dashboards
                 interactifs, je transforme la théorie en impact concret.
               </p>
               <p>
-                Ma vision : contribuer à l'émergence de solutions technologiques africaines innovantes, 
-                construire des systèmes qui améliorent la vie quotidienne, et prouver que l'excellence 
+                Ma vision : contribuer à l'émergence de solutions technologiques africaines innovantes,
+                construire des systèmes qui améliorent la vie quotidienne, et prouver que l'excellence
                 tech n'a pas de frontières.
               </p>
             </div>

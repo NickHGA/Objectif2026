@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { ChevronDown, Sparkles } from 'lucide-react';
 
 export function Hero() {
@@ -16,7 +16,7 @@ export function Hero() {
     >
       {/* Animated background grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f15_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f15_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       {/* Gradient orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full filter blur-[128px] animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[128px] animate-pulse" style={{ animationDelay: '1s' }} />
@@ -53,7 +53,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12"
         >
-          Transformer les problèmes complexes en systèmes automatisés. 
+          Transformer les problèmes complexes en systèmes automatisés.
           Construire l'avenir de l'IA en Afrique, une ligne de code à la fois.
         </motion.p>
 

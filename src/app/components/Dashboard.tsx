@@ -4,7 +4,7 @@ import { getTodayDate, formatDate } from '../utils/dateUtils';
 import { Calendar, History, Plus, BookOpen, Settings, Target, TrendingUp, Search, Filter, Clock, ArrowUpRight, CheckSquare } from 'lucide-react';
 import { isActivityScheduledForDate, calculatePenalties } from '../utils/penaltyUtils';
 import { getActiveGoal, calculateGoalProgress } from '../utils/goalUtils';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 

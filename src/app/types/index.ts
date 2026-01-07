@@ -67,7 +67,14 @@ export type Theme = 'dark-default' | 'dark-blue' | 'dark-purple' | 'dark-green' 
 
 export interface Badge {
   id: string;
-  type: 'streak_7' | 'streak_30' | 'streak_100' | 'perfect_week' | 'perfect_month' | 'activities_100' | 'activities_500' | 'early_bird' | 'night_owl';
+  type:
+  | 'streak_7' | 'streak_30' | 'streak_100'
+  | 'perfect_week' | 'perfect_month'
+  | 'activities_100' | 'activities_500'
+  | 'early_bird' | 'night_owl'
+  | 'polyvalent' | 'guerrier_dimanche' | 'specialiste'
+  | 'scribe' | 'pleine_conscience' | 'aura_montante'
+  | 'insubmersible' | 'chasseur_penalites' | 'architecte' | 'visionnaire';
   earnedAt: string;
 }
 

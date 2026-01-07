@@ -10,12 +10,12 @@ import { SettingsModal } from './components/SettingsModal';
 import { GoalModal } from './components/GoalModal';
 import { DayDetailModal } from './components/DayDetailModal';
 import { BadgeNotification } from './components/BadgeNotification';
-import { Confetti } from './components/Confetti';
 import { getTodayDate } from './utils/dateUtils';
 import { checkNewBadges } from './utils/badgeUtils';
 import { createWeeklyGoal, createMonthlyGoal } from './utils/goalUtils';
 import { applyTheme } from './utils/themeUtils';
 import { Settings } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 
 type View = 'dashboard' | 'activities' | 'stats' | 'calendar' | 'settings';
 
@@ -37,21 +37,20 @@ export default function App() {
   const [showDayDetailModal, setShowDayDetailModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [newBadge, setNewBadge] = useState<Badge | null>(null);
-  const [showConfetti, setShowConfetti] = useState(false);
 
   // Apply theme on mount and when it changes
   useEffect(() => {
     applyTheme(settings.theme);
   }, [settings.theme]);
 
-  // Check for new badges whenever logs change
+  // Check for new badges whenever relevant data changes
   useEffect(() => {
-    const newBadges = checkNewBadges(activities, logs, badges);
+    const newBadges = checkNewBadges(activities, logs, notes, goals, badges);
     if (newBadges.length > 0) {
       setBadges([...badges, ...newBadges]);
       setNewBadge(newBadges[0]); // Show first new badge
     }
-  }, [logs.length]);
+  }, [logs.length, notes.length, goals.length, activities.length]);
 
   // Setup notifications
   useEffect(() => {
@@ -73,6 +72,7 @@ export default function App() {
       return () => clearInterval(interval);
     }
   }, [settings.notifications, settings.notificationTime]);
+
 
   const handleAddActivity = (activityData: Omit<Activity, 'id' | 'createdAt'>) => {
     const newActivity: Activity = {
@@ -116,12 +116,6 @@ export default function App() {
         completedAt: new Date().toISOString(),
       };
       setLogs([...logs, newLog]);
-
-      // Trigger confetti for first completion of the day
-      const todayLogs = logs.filter(l => l.date === today && l.completed);
-      if (todayLogs.length === 0) {
-        setShowConfetti(true);
-      }
     }
   };
 
@@ -263,10 +257,6 @@ export default function App() {
       )}
 
       {/* Confetti effect */}
-      <Confetti
-        trigger={showConfetti}
-        onComplete={() => setShowConfetti(false)}
-      />
 
     </div>
   );

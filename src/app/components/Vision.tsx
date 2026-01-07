@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Lightbulb, Rocket, Globe2, TrendingUp } from 'lucide-react';
 
@@ -38,11 +38,11 @@ export function Vision() {
     <section id="vision" className="relative py-32 bg-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f08_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       {/* Gradient orbs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full filter blur-[128px]" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/10 rounded-full filter blur-[128px]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section header */}
         <motion.div
@@ -69,8 +69,8 @@ export function Vision() {
         >
           <div className="p-8 md:p-12 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-sm">
             <blockquote className="text-2xl md:text-3xl text-white/90 italic mb-6">
-              "L'excellence technologique n'a pas de frontières. Mon objectif est de prouver qu'on peut créer 
-              des solutions de classe mondiale depuis l'Afrique, tout en formant la prochaine génération 
+              "L'excellence technologique n'a pas de frontières. Mon objectif est de prouver qu'on peut créer
+              des solutions de classe mondiale depuis l'Afrique, tout en formant la prochaine génération
               d'innovateurs."
             </blockquote>
             <p className="text-gray-400">— Vision personnelle 2025</p>
@@ -90,7 +90,7 @@ export function Vision() {
               <div className="relative p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 h-full">
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${point.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`} />
-                
+
                 <div className="relative z-10">
                   {/* Icon */}
                   <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${point.gradient} bg-opacity-10 mb-6`}>
@@ -114,7 +114,7 @@ export function Vision() {
           className="max-w-4xl mx-auto"
         >
           <h3 className="text-2xl font-bold text-white text-center mb-12">Feuille de route</h3>
-          
+
           <div className="space-y-6">
             {[
               { period: 'Court terme (2025)', goals: 'Approfondir mes compétences en ML/Deep Learning, multiplier les projets IA concrets' },

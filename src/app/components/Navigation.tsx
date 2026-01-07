@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 export function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
@@ -48,11 +48,10 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? 'bg-black/80 backdrop-blur-lg border-b border-white/10'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -75,11 +74,10 @@ export function Navigation() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
                 onClick={() => scrollToSection(item.id)}
-                className={`relative text-sm transition-colors ${
-                  activeSection === item.id
+                className={`relative text-sm transition-colors ${activeSection === item.id
                     ? 'text-blue-400'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 {item.label}
                 {activeSection === item.id && (

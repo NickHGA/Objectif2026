@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AppSettings, Theme } from '../types';
 import { X, Bell, BellOff, Palette, Check, Settings, Clock } from 'lucide-react';
 import { THEMES } from '../utils/themeUtils';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SettingsModalProps {
   settings: AppSettings;

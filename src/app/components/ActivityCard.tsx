@@ -2,18 +2,24 @@ import { useState } from 'react';
 import { Activity, DailyLog, Penalty } from '../types';
 import { CheckCircle2, Circle, Clock, Hash, MessageSquare, AlertTriangle } from 'lucide-react';
 import { getCategoryColor } from '../utils/statsUtils';
-import { getTotalPenaltyValue, getWeekDayName } from '../utils/penaltyUtils';
-import { motion, AnimatePresence } from 'motion/react';
+import { getTotalPenaltyValue } from '../utils/penaltyUtils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ActivityCardProps {
   activity: Activity;
   log?: DailyLog;
   penalties: Penalty[];
   currentDate: string;
-  onToggle: (activityId: string, value?: number, comment?: string) => void;
+  onToggle: (id: string, value: number, comment?: string) => void;
 }
 
-export function ActivityCard({ activity, log, penalties, currentDate, onToggle }: ActivityCardProps) {
+export function ActivityCard({
+  activity,
+  log,
+  penalties,
+  currentDate,
+  onToggle
+}: ActivityCardProps) {
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState(log?.comment || '');
 
@@ -46,7 +52,7 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
     <motion.div
       layout
       whileHover={{ y: -2 }}
-      className={`p-4 sm:p-5 rounded-3xl border transition-all duration-300 glass-effect shadow-sm overflow-hidden relative ${activeBgColor} ${activeBorderColor}`}
+      className={`p-4 sm:p-5 rounded-3xl border transition-all duration-300 shadow-sm overflow-hidden relative group backdrop-blur-sm ${activeBgColor} ${activeBorderColor}`}
     >
       {isCompleted && (
         <motion.div
@@ -111,9 +117,13 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
           </div>
         </div>
 
+
         {!isCompleted && (
           <button
-            onClick={() => setShowComment(!showComment)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowComment(!showComment);
+            }}
             className={`p-2.5 rounded-2xl transition-all ${showComment ? 'bg-primary/20 text-primary' : 'hover:bg-muted text-muted-foreground'}`}
           >
             <MessageSquare className="w-5 h-5" />
@@ -147,6 +157,7 @@ export function ActivityCard({ activity, log, penalties, currentDate, onToggle }
                 type="text"
                 value={comment}
                 autoFocus
+                onClick={(e) => e.stopPropagation()}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Ajouter un commentaire..."
                 className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground text-sm focus:outline-none focus:border-primary transition-all"

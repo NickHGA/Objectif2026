@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Code2, Server, Database, Brain, Wrench, GitBranch } from 'lucide-react';
 
@@ -74,7 +74,7 @@ export function Skills() {
     <section id="skills" className="relative py-32 bg-gradient-to-b from-gray-950 to-black overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f08_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section header */}
         <motion.div

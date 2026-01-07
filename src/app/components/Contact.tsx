@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Mail, Github, Linkedin, Send, MessageSquare, Phone } from 'lucide-react';
 
@@ -42,10 +42,10 @@ export function Contact() {
     <section id="contact" className="relative py-32 bg-gradient-to-b from-black to-gray-950 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f08_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-      
+
       {/* Gradient orbs */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 rounded-full filter blur-[128px]" />
-      
+
       <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section header */}
         <motion.div
@@ -79,8 +79,8 @@ export function Contact() {
                   </span>
                 </h3>
                 <p className="text-gray-400 mb-6">
-                  Je suis toujours ouvert aux opportunités qui me permettent d'apprendre, 
-                  de créer et d'avoir un impact. Que vous soyez recruteur, entrepreneur, 
+                  Je suis toujours ouvert aux opportunités qui me permettent d'apprendre,
+                  de créer et d'avoir un impact. Que vous soyez recruteur, entrepreneur,
                   ou simplement passionné de tech, n'hésitez pas à me contacter.
                 </p>
                 <div className="flex flex-wrap gap-3">

@@ -4,7 +4,8 @@ import { calculateStats, getCategoryColor, getCategoryLabel } from '../utils/sta
 import { getDateRange, getTodayDate, formatDate } from '../utils/dateUtils';
 import { calculatePenalties, isActivityScheduledForDate, getActivePenalties } from '../utils/penaltyUtils';
 import { useState } from 'react';
-import { getBadgeDefinition } from '../utils/badgeUtils';
+import { motion } from 'framer-motion';
+import { getBadgeDefinition, BADGE_DEFINITIONS } from '../utils/badgeUtils';
 import { predictMonthlyCompletion, getActiveGoal } from '../utils/goalUtils';
 
 interface StatisticsProps {
@@ -307,42 +308,78 @@ export function Statistics({ activities, logs, badges, goals, onNavigate, onCrea
         )}
 
         {/* Badges Section */}
-        {badges.length > 0 && (
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10">
-            <div className="flex items-center gap-3 mb-4">
-              <Award className="w-6 h-6 text-yellow-400" />
-              <h3 className="font-semibold">Badges obtenus</h3>
+        <div className="space-y-6">
+          {/* Badges Obtenus */}
+          {badges.length > 0 && (
+            <div className="p-6 rounded-[2rem] bg-card border border-border shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-xl bg-primary/10">
+                  <Award className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-black tracking-tight">Badges obtenus</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {badges.map(badge => {
+                  const definition = getBadgeDefinition(badge.type);
+                  if (!definition) return null;
+                  return (
+                    <motion.div
+                      key={badge.id}
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className={`p-5 rounded-3xl bg-gradient-to-br ${definition.color} border border-white/20 text-center shadow-lg relative group overflow-hidden`}
+                    >
+                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">{definition.icon}</div>
+                      <h4 className="font-black text-white text-sm mb-1 leading-tight">{definition.name}</h4>
+                      <p className="text-[10px] text-white/80 leading-tight">{definition.description}</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {badges.map(badge => {
-                const definition = getBadgeDefinition(badge.type);
-                if (!definition) return null;
+          )}
 
-                return (
-                  <div key={badge.id} className={`p-4 rounded-xl bg-gradient-to-br ${definition.color} border border-white/20 text-center`}>
-                    <div className="text-3xl mb-2">{definition.icon}</div>
-                    <h4 className="font-semibold text-white text-sm mb-1">{definition.name}</h4>
-                    <p className="text-xs text-white/70">{definition.description}</p>
-                  </div>
-                );
-              })}
+          {/* Badges à débloquer */}
+          <div className="p-6 rounded-[2rem] bg-card border border-border shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-xl bg-muted">
+                <Trophy className="w-6 h-6 text-muted-foreground" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-black tracking-tight">Prochains défis</h3>
+                <p className="text-xs text-muted-foreground">Continue pour tous les débloquer</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {BADGE_DEFINITIONS.filter(def => !badges.some(b => b.type === def.type)).map(definition => (
+                <div
+                  key={definition.type}
+                  className="p-5 rounded-3xl bg-muted/30 border border-border/50 text-center grayscale opacity-60"
+                >
+                  <div className="text-4xl mb-3 opacity-40">{definition.icon}</div>
+                  <h4 className="font-bold text-foreground text-sm mb-1 leading-tight">{definition.name}</h4>
+                  <p className="text-[10px] text-muted-foreground leading-tight">{definition.description}</p>
+                </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
 
         {/* Prediction Section */}
         {predictMonthlyCompletion(activities, logs) > 0 && (
-          <div className="p-6 rounded-xl bg-gradient-to-r from-secondary/20 to-primary/10 border border-secondary/30">
-            <div className="flex items-center gap-3 mb-4">
-              <TrendingUp className="w-6 h-6 text-secondary" />
-              <h3 className="font-semibold">Prédiction du mois</h3>
-            </div>
-            <div className="text-center">
-              <p className="text-5xl font-bold text-white mb-2">
+          <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-primary to-accent border border-primary/20 shadow-xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-3xl -mr-24 -mt-24 group-hover:bg-white/20 transition-colors" />
+            <div className="relative z-10 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <TrendingUp className="w-6 h-6 text-white/80" />
+                <h3 className="font-black text-white/90 uppercase tracking-widest text-xs">Prédiction Aura</h3>
+              </div>
+              <p className="text-6xl font-black text-white mb-4 tracking-tighter">
                 {predictMonthlyCompletion(activities, logs)}%
               </p>
-              <p className="text-sm text-gray-300">
-                Si tu continues au même rythme, tu termineras le mois à ce pourcentage
+              <p className="text-sm text-white/80 font-medium max-w-xs mx-auto">
+                Basé sur ton rythme actuel, tu terminerais le mois à ce niveau. Maintiens l'effort !
               </p>
             </div>
           </div>
