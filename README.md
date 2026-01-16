@@ -51,6 +51,10 @@ Assurez-vous d'avoir [Node.js](https://nodejs.org/) installé sur votre machine.
    npm run build
    ```
 
+5. **En ligne**
+   ![Vercel](https://vercelbadge.vercel.app/api/nickhga/objectif2026)
+   https://objectif2026.vercel.app/
+
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request pour suggérer des améliorations.
